@@ -1,20 +1,28 @@
 package com.example.rumpilstilstkin.lesson1.moxy;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.PresenterType;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.rumpilstilstkin.lesson1.R;
 
 
 public class MoxyMainActivity extends MvpAppCompatActivity
         implements MoxyExampleView, View.OnClickListener {
 
-    @InjectPresenter
+    @InjectPresenter(type = PresenterType.LOCAL)
     Presenter presenter;
+
+    @ProvidePresenter(type = PresenterType.LOCAL)
+    Presenter providePresenter() {
+        return new Presenter(new Model());
+    }
 
     private Button btnCounter1;
     private Button btnCounter2;
@@ -34,21 +42,56 @@ public class MoxyMainActivity extends MvpAppCompatActivity
 
     @Override
     public void onClick(View v) {
-        presenter.buttonClick(v.getId());
+        switch (v.getId()) {
+            case R.id.btnCounter1: {
+                presenter.onAction(ActionType.ONE);
+                break;
+            }
+            case R.id.btnCounter2: {
+                presenter.onAction(ActionType.TWO);
+                break;
+            }
+            case R.id.btnCounter3: {
+                presenter.onAction(ActionType.THREE);
+                break;
+            }
+        }
     }
 
     @Override
-    public void setButtonText(int btnIndex, int value) {
-        switch (btnIndex) {
-            case 1:
-                btnCounter1.setText("Количество = " + value);
-                break;
-            case 2:
-                btnCounter2.setText("Количество = " + value);
-                break;
-            case 3:
-                btnCounter3.setText("Количество = " + value);
-                break;
+    public void setOneButtonText(String value) {
+        btnCounter1.setText(value);
+    }
+
+    @Override
+    public void setTwoButtonText(String value) {
+        btnCounter2.setText(value);
+
+    }
+
+    @Override
+    public void setThreeButtonText(String value) {
+        btnCounter3.setText(value);
+    }
+
+    class MyAsynck extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //todo show progress
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            // go to net
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //hide show progress
         }
     }
 }

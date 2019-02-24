@@ -2,6 +2,7 @@ package com.example.rumpilstilstkin.lesson1.mosby;
 
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,16 @@ public class MosbyMainActivity extends MvpActivity<MosbyExampleView, Presenter>
         btnCounter1.setOnClickListener(this);
         btnCounter2.setOnClickListener(this);
         btnCounter3.setOnClickListener(this);
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @NonNull

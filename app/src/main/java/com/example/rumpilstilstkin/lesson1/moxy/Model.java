@@ -1,11 +1,9 @@
 package com.example.rumpilstilstkin.lesson1.moxy;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class Model{
+public class Model implements IModel{
     private List<Integer> mList;
 
     public Model() {
@@ -15,10 +13,12 @@ public class Model{
         mList.add(0);
     }
 
+    @Override
     public int getElementValueAtIndex(int _index) {
         return mList.get(_index);
     }
 
+    @Override
     public void setElementValueAtIndex(int _index, int value) {
         mList.set(_index, value);
     }
